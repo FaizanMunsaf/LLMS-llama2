@@ -71,6 +71,8 @@ def chatBot():
     # Actually run the thing
     output = model.generate(**inputs, streamer=streamer,
                             use_cache=True, max_new_tokens=float('inf'))
+    
+    print(output)
 
     # Covert the output tokens back to text
     output_text = tokenizer.decode(output[0], skip_special_tokens=True)
@@ -150,5 +152,5 @@ if __name__ == "__main__":
     # for local run 
     # app.run(debug=False)
     # for live run
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=False)
     
