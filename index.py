@@ -42,7 +42,7 @@ tokenizer = AutoTokenizer.from_pretrained(name,
 
 model = AutoModelForCausalLM.from_pretrained(name,
     cache_dir='./model/', use_auth_token=auth_token, torch_dtype=torch.float16,
-    rope_scaling={"type": "dynamic", "factor": 2}, load_in_16bit=True)
+    rope_scaling={"type": "dynamic", "factor": 2}, load_in_8bit=True)
 
 
 # Create a system prompt
@@ -97,8 +97,9 @@ service_context = ServiceContext.from_defaults(
 set_global_service_context(service_context)
 
 
-
-
+# =======================================
+# Api Routes Start From here
+# =======================================
 @app.route('/', methods=["GET","POST"])
 def index():
     return "Hello World!"
