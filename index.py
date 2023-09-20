@@ -67,6 +67,38 @@ query_wrapper_prompt = SimpleInputPrompt("{query_str} [/INST]")
 
 
 
+# Complete the query prompt
+query_wrapper_prompt.format(query_str='Salam! Islamic Gpt here and I am helpfull to work with you as a great Scholar of Islam')
+
+
+
+# Create a HF LLM using the llama index wrapper
+llm = HuggingFaceLLM(context_window=4096,
+                    max_new_tokens=256,
+                    system_prompt=system_prompt,
+                    query_wrapper_prompt=query_wrapper_prompt,
+                    model=model,
+                    tokenizer=tokenizer)
+
+
+# Create and dl embeddings instance
+# !pip install sentence_transformers
+embeddings=LangchainEmbedding(
+    HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+)
+
+# Create new service context instance
+service_context = ServiceContext.from_defaults(
+    chunk_size=1024,
+    llm=llm,
+    embed_model=embeddings
+)
+# And set the service context
+set_global_service_context(service_context)
+
+
+
+
 @app.route('/', methods=["GET","POST"])
 def index():
     return "Hello World!"
@@ -108,37 +140,6 @@ def chatBot():
 
 
     
-
-
-    # Complete the query prompt
-    query_wrapper_prompt.format(query_str='Hello')
-
-
-
-    # Create a HF LLM using the llama index wrapper
-    llm = HuggingFaceLLM(context_window=4096,
-                        max_new_tokens=256,
-                        system_prompt=system_prompt,
-                        query_wrapper_prompt=query_wrapper_prompt,
-                        model=model,
-                        tokenizer=tokenizer)
-
-
-    # Create and dl embeddings instance
-    # !pip install sentence_transformers
-    embeddings=LangchainEmbedding(
-        HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    )
-
-    # Create new service context instance
-    service_context = ServiceContext.from_defaults(
-        chunk_size=1024,
-        llm=llm,
-        embed_model=embeddings
-    )
-    # And set the service context
-    set_global_service_context(service_context)
-
     # Define your question
     question = F"{prompt_result}"
 
