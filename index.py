@@ -113,35 +113,9 @@ def chatBot():
     print(prompt_result)
     print(system_prompt_result)
 
-    # Setup a prompt
-    # prompt =f"### User:{prompt_result} \
-    #         ### Assistant:"
-    # Pass the prompt to the tokenizer
-    # inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    # Setup the text streamer
-    # streamer = TextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
-
-
-    # Actually run the thing
-    # output = model.generate(**inputs, streamer=streamer,
-    #                         use_cache=True, max_new_tokens=float('inf'))
-    
-    # print(output)
-
-    # Covert the output tokens back to text
-    # output_text = tokenizer.decode(output[0], skip_special_tokens=True)
-
-    
-
-    # system_prompt = f"""<s>[INST] <<SYS>>
-    # {system_prompt_result}
-    # <</SYS>>
-    # """
-
-
     
     # Define your question
-    question = F"{prompt_result}"
+    question = f"{prompt_result}"
 
     # Use the LLM predictor to generate a response
     response = service_context.llm_predictor.predict(question)
@@ -149,8 +123,7 @@ def chatBot():
 
     # print(output_text)
     return {
-        "data" : "output_text",
-        "restricted" : response,
+        "data" : response,
             "status" : 200,
             "message" : "Response Generate Successfully!"}
 
