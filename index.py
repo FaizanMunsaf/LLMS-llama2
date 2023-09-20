@@ -150,7 +150,7 @@ def chatBot():
 if __name__ == "__main__":
     
     #for local run 
-    app.run(debug=False)
+    # app.run(debug=False)
     # for live run
     app.run(host='0.0.0.0', port=8000)
     
