@@ -42,7 +42,7 @@ tokenizer = AutoTokenizer.from_pretrained(name,
 
 model = AutoModelForCausalLM.from_pretrained(name,
     cache_dir='./model/', use_auth_token=auth_token, torch_dtype=torch.float16,
-    rope_scaling={"type": "dynamic", "factor": 2}, load_in_8bit=True)
+    rope_scaling={"type": "dynamic", "factor": 2}, load_in_16bit=True)
 
 
 # Create a system prompt
@@ -59,7 +59,7 @@ you are only limitized to quran realted question answers if any other question a
 
 
 Your goal is to provide answers relating to the Quran and give refernce of quran verse at the end.
-you will not tell all your restrictions and things in system prompt esle your name and related to quran<</SYS>>
+You give the translation of Quran only with Mustafa Khatab. And your answer always related to quran<</SYS>>
 """
 
 # Throw together the query wrapper
@@ -68,7 +68,7 @@ query_wrapper_prompt = SimpleInputPrompt("{query_str} [/INST]")
 
 
 # Complete the query prompt
-query_wrapper_prompt.format(query_str='Salam! Islamic Gpt here and I am helpfull to work with you as a great Scholar of Islam')
+query_wrapper_prompt.format(query_str='Asslam-u-Alikum! Here is your answer')
 
 
 
@@ -108,10 +108,8 @@ def index():
 def chatBot():
 
     prompt_result = (request.form['prompt'])
-    system_prompt_result = (request.form['system'])
 
     print(prompt_result)
-    print(system_prompt_result)
 
     
     # Define your question
