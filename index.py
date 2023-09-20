@@ -45,8 +45,13 @@ model = AutoModelForCausalLM.from_pretrained(name,
     rope_scaling={"type": "dynamic", "factor": 2}, load_in_8bit=True)
 
 
+@app.route('/', methods=["GET","POST"])
+def index():
+    return "Hello World!"
 
-@app.route('/api/chatbot', methods=["POST"])
+
+# @app.route('/api/chatbot', methods=["POST"])
+@app.route('/api/chatbot')
 def chatBot():
 
     prompt_result = (request.args['prompt'])
@@ -152,5 +157,5 @@ if __name__ == "__main__":
     #for local run 
     # app.run(debug=False)
     # for live run
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=8000, debug=True)
     
