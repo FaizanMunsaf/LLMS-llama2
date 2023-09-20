@@ -25,8 +25,8 @@ app = Flask(__name__)
 #==========================================================
 
 # to add Cross Origin Resource Sharing (CORS) policy
-from flask_cors import CORS
-CORS(app)
+# from flask_cors import CORS
+# CORS(app)
 
 #========================================================== 
 # Define variable to hold llama2 weights naming
