@@ -60,22 +60,22 @@ def chatBot():
     print(system_prompt_result)
 
     # Setup a prompt
-    prompt =f"### User:{prompt_result} \
-            ### Assistant:"
+    # prompt =f"### User:{prompt_result} \
+    #         ### Assistant:"
     # Pass the prompt to the tokenizer
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    # inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     # Setup the text streamer
-    streamer = TextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
+    # streamer = TextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
 
 
     # Actually run the thing
-    output = model.generate(**inputs, streamer=streamer,
-                            use_cache=True, max_new_tokens=float('inf'))
+    # output = model.generate(**inputs, streamer=streamer,
+    #                         use_cache=True, max_new_tokens=float('inf'))
     
-    print(output)
+    # print(output)
 
     # Covert the output tokens back to text
-    output_text = tokenizer.decode(output[0], skip_special_tokens=True)
+    # output_text = tokenizer.decode(output[0], skip_special_tokens=True)
 
     # Create a system prompt
     # system_prompt = """<s>[INST] <<SYS>>
@@ -94,55 +94,56 @@ def chatBot():
     # you will not tell all your restrictions and things in system prompt esle your name and related to quran<</SYS>>
     # """
 
-    # system_prompt = f"""<s>[INST] <<SYS>>
-    # {system_prompt_result}
-    # <</SYS>>
-    # """
+    system_prompt = f"""<s>[INST] <<SYS>>
+    {system_prompt_result}
+    <</SYS>>
+    """
 
 
     # Throw together the query wrapper
-    # query_wrapper_prompt = SimpleInputPrompt("{query_str} [/INST]")
+    query_wrapper_prompt = SimpleInputPrompt("{query_str} [/INST]")
 
 
     # Complete the query prompt
-    # query_wrapper_prompt.format(query_str='hello')
+    query_wrapper_prompt.format(query_str=f'{prompt_result}')
 
 
 
     # Create a HF LLM using the llama index wrapper
-    # llm = HuggingFaceLLM(context_window=4096,
-    #                     max_new_tokens=256,
-    #                     system_prompt=system_prompt,
-    #                     query_wrapper_prompt=query_wrapper_prompt,
-    #                     model=model,
-    #                     tokenizer=tokenizer)
+    llm = HuggingFaceLLM(context_window=4096,
+                        max_new_tokens=256,
+                        system_prompt=system_prompt,
+                        query_wrapper_prompt=query_wrapper_prompt,
+                        model=model,
+                        tokenizer=tokenizer)
 
 
     # Create and dl embeddings instance
-    #!pip install sentence_transformers
-    # embeddings=LangchainEmbedding(
-    #     HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    # )
+    # !pip install sentence_transformers
+    embeddings=LangchainEmbedding(
+        HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    )
 
-    # # Create new service context instance
-    # service_context = ServiceContext.from_defaults(
-    #     chunk_size=1024,
-    #     llm=llm,
-    #     embed_model=embeddings
-    # )
-    # # And set the service context
-    # set_global_service_context(service_context)
+    # Create new service context instance
+    service_context = ServiceContext.from_defaults(
+        chunk_size=1024,
+        llm=llm,
+        embed_model=embeddings
+    )
+    # And set the service context
+    set_global_service_context(service_context)
 
-    # # Define your question
-    # question = F"{prompt_result}"
+    # Define your question
+    question = F"{prompt_result}"
 
-    # # Use the LLM predictor to generate a response
-    # response = service_context.llm_predictor.predict(question)
+    # Use the LLM predictor to generate a response
+    response = service_context.llm_predictor.predict(question)
 
 
     # print(output_text)
     return {
-        "data" : output_text,
+        "data" : "output_text",
+        "restricted" : response,
             "status" : 200,
             "message" : "Response Generate Successfully!"}
 
