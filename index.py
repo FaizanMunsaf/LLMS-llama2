@@ -52,22 +52,25 @@ def chatBot():
     prompt_result = (request.args['prompt'])
     system_prompt_result = (request.args['system'])
 
+    print(prompt_result)
+    print(system_prompt_result)
+
     # Setup a prompt
-    prompt =f"### User:{prompt_result} \
-            ### Assistant:"
-    # Pass the prompt to the tokenizer
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    # Setup the text streamer
-    streamer = TextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
+    # prompt =f"### User:{prompt_result} \
+    #         ### Assistant:"
+    # # Pass the prompt to the tokenizer
+    # inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    # # Setup the text streamer
+    # streamer = TextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
 
 
-    # Actually run the thing
-    output = model.generate(**inputs, streamer=streamer,
-                            use_cache=True, max_new_tokens=float('inf'))
+    # # Actually run the thing
+    # output = model.generate(**inputs, streamer=streamer,
+    #                         use_cache=True, max_new_tokens=float('inf'))
 
 
-    # Covert the output tokens back to text
-    output_text = tokenizer.decode(output[0], skip_special_tokens=True)
+    # # Covert the output tokens back to text
+    # output_text = tokenizer.decode(output[0], skip_special_tokens=True)
 
 
 
@@ -137,8 +140,9 @@ def chatBot():
     # response = service_context.llm_predictor.predict(question)
 
 
-    print(output_text)
-    return {"data" : output_text,
+    # print(output_text)
+    return {
+        # "data" : output_text,
             "status" : 200,
             "message" : "Response Generate Successfully!"}
 
