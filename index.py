@@ -49,13 +49,12 @@ model = AutoModelForCausalLM.from_pretrained(name,
 def index():
     return "Hello World!"
 
-
-# @app.route('/api/chatbot', methods=["POST"])
-@app.route('/api/chatbot')
+# @app.route('/api/chatbot')
+@app.route('/api/chatbot', methods=["POST"])
 def chatBot():
 
-    prompt_result = (request.args['prompt'])
-    system_prompt_result = (request.args['system'])
+    prompt_result = (request.form['prompt'])
+    system_prompt_result = (request.form['system'])
 
     print(prompt_result)
     print(system_prompt_result)
