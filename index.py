@@ -72,14 +72,8 @@ def chatBot():
     output = model.generate(**inputs, streamer=streamer,
                             use_cache=True, max_new_tokens=float('inf'))
 
-
     # Covert the output tokens back to text
     output_text = tokenizer.decode(output[0], skip_special_tokens=True)
-
-
-
-
-
 
     # Create a system prompt
     # system_prompt = """<s>[INST] <<SYS>>
@@ -147,14 +141,13 @@ def chatBot():
     # print(output_text)
     return {
         "data" : output_text,
-        "test" : output,
             "status" : 200,
             "message" : "Response Generate Successfully!"}
 
 
 if __name__ == "__main__":
     
-    #for local run 
+    # for local run 
     # app.run(debug=False)
     # for live run
     app.run(host='0.0.0.0', port=8000, debug=True)
