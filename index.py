@@ -32,7 +32,7 @@ CORS(app)
 # Define variable to hold llama2 weights naming
 name = "meta-llama/Llama-2-7b-chat-hf"
 # Set auth token variable from hugging face
-auth_token = "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"
+auth_token = ""
 
 
 # Create tokenizer
