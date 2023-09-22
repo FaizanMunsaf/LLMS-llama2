@@ -65,7 +65,7 @@ query_wrapper_prompt.format(query_str='Asslam-u-Alikum! Here is your answer')
 
 # Create a HF LLM using the llama index wrapper
 llm = HuggingFaceLLM(context_window=4096,
-                    max_new_tokens=float('inf'),
+                    max_new_tokens=2000, # float('inf') use for infinity,
                     system_prompt=system_prompt,
                     query_wrapper_prompt=query_wrapper_prompt,
                     model=model,
